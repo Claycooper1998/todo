@@ -1,4 +1,6 @@
 <?php
+
+
 //This trims the URI
 $request_uri = trim($_SERVER['REQUEST_URI'],'/');
 
@@ -60,12 +62,14 @@ if (!$db_page2) {
 <?php
 include __DIR__.'/includes/header.php';
 ?>
+
 <div class="text-center">
     <?php
     foreach ($pages as $content)
+    //I think the best way to do this is to have each page separate and customize each page
     {
     echo "<h1 class='text-white'>" . $content['nav_name'] . "</h1>" . 
-    "<h1 class='text-gray-700'>" . $content['content'] . "</h1>";
+    "<h1 class='text-black'>" . $content['content'] . "</h1>";
     }
     ?>
 </div>

@@ -23,7 +23,6 @@
                     }
                     ?>
                 
-
             </div>
         </div>
         <div id="pageBody" class="mt-4 p-8 bg-gray-500">
