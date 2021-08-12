@@ -1,8 +1,6 @@
-</div>
-        <div id="footer" class="w-full flex border-t p-8">
-            <div>
-                <a href="#" class="text-2xl font-bold">Footer</a>
-            </div>
+    <div>
+        <div class="bg-white w-full p-8 text-center">
+            <a href="#" class="text-2xl font-bold">Footer</a>
         </div>
     </div>
 
