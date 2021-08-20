@@ -7,15 +7,18 @@
     <div>
         <div class="p-4">
             <div class="flex justify-center w-full text-center">
-                <input class="flex p-2 text-gray-500 w-2/3" type="text" id="A3-yes" name="mytextarea" value="Title..." />
-                <button class="flex bg-red-500 px-10">
+                <input id="myInput" class="flex p-2 text-gray-500 w-2/3" type="text" id="A3-yes" name="mytextarea" value="Title..." />
+                <button class="add flex bg-red-500 px-10">
                     <h1 class="m-auto font-bold">Add</h1>
                 </button>
             </div>
         </div>
-        <ul>
+        <ul id="myUL">
             <li class="flex justify-center w-full py-4">
                 <div class="checked bg-white p-2 text-gray-500 w-2/3 bg-white text-left">Hello</div>
+            </li>
+            <li class="flex justify-center w-full py-4">
+                <div class="checked bg-white p-2 text-gray-500 w-2/3 bg-white text-left">hi</div>
             </li>
         </ul>
     </div>
@@ -24,31 +27,47 @@
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
 <script>
-    // \u2713 for checkmark \u00D7
+    var new_element = function(id) {
+        return document.createElement(id);
+    };
+    var get_id = function(id) {
+        return document.getElementById(id);
+    };
+    var new_text = function(id) {
+        return document.createTextNode(id);
+    };
+    var get_class = function(id) {
+        return document.getElementsByClassName(id);
+    };
+    var get_name_tag = function(id) {
+        return document.getElementsByTagName(id);
+    };
 
-    var LiTag = document.getElementsByTagName("LI");
-    var i;
+    var add = get_class("add");
+    var li = new_element("li");
+    var div = new_element("div");
+    var my_input = get_id("myInput").value;
+    var input_text = new_text(my_input);
+    var new_x_span = new_element("span");
+    var new_checkmark_span = new_element("span");
+    var txt_x = new_text("\u00D7");
+    var txt_checkmark = new_text("\u2713");
+    var LiTag = get_name_tag("li")
+    var i = '';
+
+    //This is adding the X and checkmark in the code as well as styling them
     for (i = 0; i < LiTag.length; i++) {
-        //creates Span tag with X in it
         var xSpan = document.createElement("SPAN");
         var makeX = document.createTextNode("\u00D7");
-        //creates Span tag with checkmark in it
         var checkSpan = document.createElement("SPAN");
         var makeCheckmark = document.createTextNode("\u2713");
-        //since we are using tailwind, it is a good idea to add the whole class in here so it all loads
-        //These are both making the clases with the names of them with the tailwind CSS included
-        checkSpan.className = "op flex justfiy-end bg-white hover:bg-red-500 text-3xl text-black hover:text-white px-2 cursor-pointer";
+        checkSpan.className = "checked flex justfiy-end bg-white hover:bg-red-500 text-3xl text-black hover:text-white px-2 cursor-pointer";
         xSpan.className = "close flex justfiy-end bg-white hover:bg-red-500 text-3xl text-black hover:text-white px-2 cursor-pointer";
-        //this basically inserts the checkmark before the div so that it can be at the front of the whole statement
         checkSpan.appendChild(makeCheckmark);
         LiTag[i].insertBefore(checkSpan, LiTag[i].firstChild);
-        //Inserts the X at the end of the statement
         xSpan.appendChild(makeX);
         LiTag[i].appendChild(xSpan)
-
     }
-    //This section takes the "close" class that we made up above and added to the span tag in the X and closes the whole statement
-    //just sets all the information to no styling so it doesn't show up
     var close = document.getElementsByClassName("close");
     var i;
     for (i = 0; i < close.length; i++) {
@@ -58,12 +77,46 @@
         }
     }
 
-    var list = document.querySelector("LI");
-    list.addEventListener("click", function(ev) {
-        var element = ev.target;
-        if (element.tagName === 'LI') {
-            element.classList.toggle('checked');
-            console.log("testing");
+    //I need to get rid of the function because it is messing up the rest of the code becuase it only runs when the onclick add button is hit
+    // ++++ **** ++++
+
+
+    //********** this connects to the add button to add a new todo to the list **********\\
+
+    for (i = 0; i < add.length; i++) {
+        add[i].onclick = function() {
+            li.className = "flex justify-center w-full py-4";
+            div.className = "bg-white p-2 text-gray-500 w-2/3 bg-white text-left";
+            div.appendChild(input_text);
+
+            if (my_input === '') {
+                alert("You Need To Add Something To The Input Text");
+            } else {
+                get_id("myUL").appendChild(li).appendChild(div);
+            }
+            get_id("myInput").value = "";
+
+            new_checkmark_span.className = "checked flex justfiy-end bg-white hover:bg-red-500 text-3xl text-black hover:text-white px-2 cursor-pointer";
+            new_checkmark_span.appendChild(makeCheckmark);
+            li.insertBefore(new_checkmark_span, li.firstChild);
+            new_x_span.className = "close flex justfiy-end bg-white hover:bg-red-500 text-3xl text-black hover:text-white px-2 cursor-pointer";
+            new_x_span.appendChild(txt_x);
+            li.appendChild(new_x_span);
+            for (i = 0; i < close.length; i++) {
+                close[i].onclick = function() {
+                    var div = this.parentElement;
+                    div.style.display = "none";
+                }
+            }
+            //++++ **** ++++
+            //This goes and gets the class checked that is already made and sends an alert when it is hit
+            var clicked = document.getElementsByClassName("checked");
+            for (i = 0; i < clicked.length; i++) {
+                clicked[i].onclick = function() {
+                    alert("you hit the checkmark");
+                }
+            }
         }
-    }, false);
+    }
+    //********** End ADD area **********\\
 </script>
