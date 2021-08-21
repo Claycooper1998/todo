@@ -7,7 +7,7 @@
     <div>
         <div class="p-4">
             <div class="flex justify-center w-full text-center">
-                <input id="myInput" class="flex p-2 text-gray-500 w-2/3" type="text" id="A3-yes" name="mytextarea" value="Title..." />
+                <input id="myInput" class="flex p-2 text-gray-500 w-2/3" type="text" id="A3-yes" name="mytextarea" value="" />
                 <button class="flex bg-red-500 px-10" onclick="add()">
                     <h1 class="m-auto font-bold">Add</h1>
                 </button>
@@ -38,6 +38,9 @@
         var get_name_tag = function(id) {
             return document.getElementsByTagName(id);
         };
+        var new_class = function(id) {
+            return document.create(id);
+        };
         var close = get_class("close");
         var li = new_element("li");
         var div = new_element("div");
@@ -64,10 +67,10 @@
         }
         get_id("myInput").value = "";
 
-        new_checkmark_span.className = "checked flex justfiy-end bg-white hover:bg-red-500 text-3xl text-black hover:text-white px-2 cursor-pointer";
+        new_checkmark_span.className = "unchecked flex justfiy-end bg-white text-3xl text-black px-2 cursor-pointer";
         new_checkmark_span.appendChild(txt_checkmark);
         li.insertBefore(new_checkmark_span, li.firstChild);
-        new_x_span.className = "close flex justfiy-end bg-white hover:bg-red-500 text-3xl text-black hover:text-white px-2 cursor-pointer";
+        new_x_span.className = "close flex justfiy-end bg-white text-3xl text-black px-2 cursor-pointer";
         new_x_span.appendChild(txt_x);
         li.appendChild(new_x_span);
         for (i = 0; i < close.length; i++) {
@@ -76,10 +79,17 @@
                 div.style.display = "none";
             }
         }
-        var clicked = document.getElementsByClassName("checked");
+        var clicked = get_class("unchecked");
         for (i = 0; i < clicked.length; i++) {
-            clicked[i].onclick = function() {
-                console.log("Testing");
+            clicked[i].onclick = function(e) {
+                const after_checked = [this.classList, this.nextSibling.classList, this.nextSibling.nextSibling.classList];
+                after_checked.forEach(function(checked, i) {
+                    if (i === 1) {
+                        checked.toggle("line-through");
+                    }
+                    checked.toggle("bg-gray-400");
+                    
+                });
             }
         }
     }
