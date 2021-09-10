@@ -18,10 +18,30 @@
     </div>
 </div>
 
+<!-- <div id="toDoTemplate" style="display: none">
+    <li class="flex justify-center w-full py-4">
+        <span class="unchecked flex justfiy-end bg-white text-3xl text-black px-2 cursor-pointer">✓</span>
+        <div class="info bg-white p-2 text-gray-500 w-2/3 bg-white text-left">BASE TEXT</div>
+        <span class="close flex justfiy-end bg-white text-3xl text-black px-2 cursor-pointer" onclick="killMe(event)">×</span>
+    </li>
+</div> -->
+
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
 <script>
     //********** this connects to the add button to add a new todo to the list **********\\
+    // function killMe(event){
+    //     console.log(event.target.closest('li'));
+    //     // document.querySelector('#myUL').removeChild(event.target.closest('li'));
+    // }
+
+
+    //     var newToDo = document.querySelector('#toDoTemplate li').cloneNode(true);
+    //     var textSpot = newToDo.querySelector('.info');
+    //     textSpot.innerHTML = document.querySelector('#myInput').value;
+    //     document.getElementById("myUL").appendChild(newToDo);
+
+    //     return;
     function add() {
         var new_element = function(id) {
             return document.createElement(id);
@@ -89,6 +109,7 @@
         var clicked = get_class("unchecked");
         for (i = 0; i < clicked.length; i++) {
             clicked[i].onclick = function(e) {
+                //this array is not efficient at all but it's all I could think of at the time (I want to clean this up)
                 const after_checked = [this.classList, this.nextSibling.classList, this.nextSibling.nextSibling.classList];
                 after_checked.forEach(function(checked, i) {
                     if (i === 1) {
